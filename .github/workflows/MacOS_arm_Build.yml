@@ -10,10 +10,14 @@ jobs:
     steps:
     - name: clone repository
       uses: actions/checkout@v2
-        
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4.0.0
+      with:
+        modules: 'qtcore qtgui qtwidgets qtopengl qtnetwork qtsvg qtscript qtscripttools qtprintsupport qtdatavis3d'
+            
     - name: Install Dependantcies And Make Mac
       run: |
-        brew install qt qtgui qtwidgets qtopengl qtnetwork qtsvg qtscript qtscripttools qtprintsupport qtdatavis3d
         brew install gsl
         qmake CONFIG+=osx_dist
         make
