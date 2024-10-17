@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v4.0.0
+      uses: jurplel/install-qt-action@v2
       with:
         modules: 'qtcore qtgui qtwidgets qtopengl qtnetwork qtsvg qtscript qtscripttools qtprintsupport qtdatavis3d'
             
