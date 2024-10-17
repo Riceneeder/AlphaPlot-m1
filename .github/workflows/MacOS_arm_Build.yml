@@ -13,7 +13,7 @@ jobs:
         
     - name: Install Dependantcies And Make Mac
       run: |
-        brew install qtcore qtgui qtwidgets qtopengl qtnetwork qtsvg qtscript qtscripttools qtprintsupport qtdatavis3d
+        brew install qt qtcore qtgui qtwidgets qtopengl qtnetwork qtsvg qtscript qtscripttools qtprintsupport qtdatavis3d
         brew install gsl
         qmake CONFIG+=osx_dist
         make
