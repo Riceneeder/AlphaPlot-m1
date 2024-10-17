@@ -1,14 +1,13 @@
-name: Build AlphaPlot for macOS (ARM)
+name: macOS M1 Build
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch: # 手动触发
 
 jobs:
   build:
-    runs-on: macos-11
+    runs-on: macos-12
+    name: Build on macOS M1
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -16,14 +15,22 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install qt5 cmake
-        brew link qt5 --force
+        brew install cmake
+        brew install qt
+        brew install gsl
 
-    - name: Configure Build
-      run: cmake -S . -B build -DCMAKE_PREFIX_PATH=$(brew --prefix qt5)
+    - name: Configure with CMake
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_PREFIX_PATH=$(brew --prefix qt) ..
 
     - name: Build
-      run: cmake --build build --config Release
+      run: |
+        cd build
+        make -j$(sysctl -n hw.ncpu)
 
-    - name: Package
-      run: cd build && make package
+    - name: Run tests
+      run: |
+        cd build
+        ctest --output-on-failure
